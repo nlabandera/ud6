@@ -16,3 +16,8 @@ Route::get('/', function () {
 });
 */
 Route::get('/','WelcomeController@index')->name('welcome');
+
+//autenticacion or correo
+Auth::routes(['verify'=> true]);
+
+Route::get('/home', 'HomeController@index')->name('home');

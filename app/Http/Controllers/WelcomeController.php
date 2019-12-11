@@ -18,7 +18,7 @@ class WelcomeController extends Controller
         $posts=Post::latest('published_at')->get(); //<-- Saca el último post el primero
         //$posts=Post::all();
         $categories=Category::all();
-        return view ('layouts.app',compact('posts','categories'));
+        return view ('layouts.blog',compact('posts','categories'));
     }
 
     /**
