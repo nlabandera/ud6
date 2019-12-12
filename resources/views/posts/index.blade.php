@@ -1,4 +1,4 @@
-@extends('posts.posts')
+@extends('layouts.plantilla')
 
 @section('content')
 <br>

@@ -12,6 +12,7 @@
 
 	<!-- Bootstrap core CSS -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{{url('font-awesome/css/font-awesome.min.css')}}">
 
 	<!-- Custom styles for this template -->
 	<link href="css/blog-post.css" rel="stylesheet">
