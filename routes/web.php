@@ -18,6 +18,16 @@ Route::get('/', function () {
 Route::get('/','WelcomeController@index')->name('welcome');
 
 //autenticacion or correo
-Auth::routes(['verify'=> true]);
+//Auth::routes(['verify'=> true]);
+
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+/*Route::get('/posts','PostController@index')->name('posts.index');
+Route::get('/post/{id}','PostController@show')->name('posts.show');
+Route::get('/post/{id}','PostController@edit')->name('posts.edit');*/
+
+Route::resource('posts','PostController');
+
+//Route::get('/posts/{id}','PostController@show')->name('posts.');

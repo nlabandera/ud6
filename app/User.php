@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-use App\Notifications\VerfyEmailVerification
+//use App\Notifications\VerfyEmailVerification
 
 
 
@@ -43,7 +43,7 @@ class User extends Authenticatable
 
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new VerifyEmailVerification);
+        //$this->notify(new VerifyEmailVerification);
     }
 
 }
