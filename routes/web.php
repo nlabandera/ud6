@@ -31,3 +31,9 @@ Route::get('/post/{id}','PostController@edit')->name('posts.edit');*/
 Route::resource('posts','PostController');
 
 //Route::get('/posts/{id}','PostController@show')->name('posts.');
+
+Route::get('/admin','AdminController@index')->name('admin')->middleware('admin');
+
+
+Route::get('/editor','EditorController@index')->name('editor')->middleware('role:editor');
+

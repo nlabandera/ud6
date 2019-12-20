@@ -3,32 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
-use App\User;
-use App\Post;
 
-class PostController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-        // $this->middleware(['auth','role:user']);
-    }
-
     public function index()
     {
-        $user = Auth::user();
-        
-        $posts=Post::where('user_id',$user->id)->get();
-
-        return view('posts.index',['posts'=>$posts]);
-
+        echo "Soy admin";
     }
 
     /**
@@ -38,7 +23,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view ('posts.create');
+        //
     }
 
     /**
@@ -49,14 +34,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $post = new Post();
-
-        $post->title = request('title');
-        $post->excerpt = request('excerpt');
-
-        $post->save();
-
-        return view ('post.posts');
+        //
     }
 
     /**
@@ -67,11 +45,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post=Post::find($id);
-        $this->authorize('view',$post);
-
-        return view('posts.posts', compact('post'));
-
+        //
     }
 
     /**
