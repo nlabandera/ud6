@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Auth;
 use App\User;
 use App\Post;
+use App\Category;
+
 
 class PostController extends Controller
 {
@@ -38,7 +40,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view ('posts.create');
+        return view ('posts.create')->with('categories',Category::all());;
     }
 
     /**
@@ -53,10 +55,18 @@ class PostController extends Controller
 
         $post->title = request('title');
         $post->excerpt = request('excerpt');
+        $post->body = request('body');
+        $post->category_id = request('category');
+        $post->user_id = auth()->user()->id;
+        
+        if(isset($post->image))
+            $post->image = request('image');
 
         $post->save();
 
-        return view ('post.posts');
+        return view ('posts.show');
+
+        
     }
 
     /**
@@ -67,10 +77,12 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post=Post::find($id);
+        /*$post=Post::find($id);
         $this->authorize('view',$post);
 
-        return view('posts.posts', compact('post'));
+        return view('posts.show', compact('post'));*/
+
+       return view('posts.show', ['post' => Post::find($id)]);
 
     }
 
@@ -105,6 +117,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Post::destroy($id);
+        return redirect('posts');
     }
 }

@@ -21,10 +21,15 @@
 				<p>Posted on {{$post->published_at}}</p>
 				<hr>
 				<!-- Preview Image -->
-				<img class="img-fluid rounded" src="{{$post->image}}" alt="">
+				@isset($post->image)
+          <!-- Preview Image -->
+          <img class="img-fluid rounded" src="{{$post->image}}" alt="">
+          <hr>
+        @endisset
 				<hr>
 				<!-- Post Content -->
-				<p class="lead">{{$post->body}}</p>
+				<p class="lead">{{$post->excerpt}}</p>
+				<p>{{$post->body}}</p>
 				<blockquote class="blockquote">
 					<p class="mb-0">blockquote ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
 					<footer class="blockquote-footer">Someone famous in
