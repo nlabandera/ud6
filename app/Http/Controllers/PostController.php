@@ -65,12 +65,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        if(auth()->user()->id == $post->user_id){
+        
             return view('posts.show')->with('post',$post);
-        }else{
-            // aborta devolviendo un status 403 (forbiden)
-            abort(403, 'Unauthorized action.');
-        }
+    
     }
 
     /**
@@ -81,12 +78,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        if(auth()->user()->id == $post->user_id){
+        
             return view('posts.edit')->with('post',$post)->with('categories',Category::all());
-        }else{
-            // aborta devolviendo un status 403 (forbiden)
-            abort(403, 'Unauthorized action.');
-        }
+        
     }
 
     /**
@@ -98,7 +92,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        if(auth()->user()->id == $post->user_id){
+       
             $post->title = $request->title;
             $post->excerpt = $request->excerpt;
             $post->body = $request->body;
@@ -108,10 +102,7 @@ class PostController extends Controller
                 $post->image = $request->image;
             $post->save();
             return redirect('/posts');
-        }else{
-            // aborta devolviendo un status 403 (forbiden)
-            abort(403, 'Unauthorized action.');
-        }
+       
     }
 
     /**
@@ -122,12 +113,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        if(auth()->user()->id == $post->user_id){
+    
             $post->delete();
             return redirect('/posts');
-        }else{
-            // aborta devolviendo un status 403 (forbiden)
-            abort(403, 'Unauthorized action.');
-        }
+      
     }
 }

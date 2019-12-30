@@ -1,6 +1,6 @@
 <?php $__env->startSection('content'); ?>
 <br>
-  <!-- Page Content -->
+
   <div class="container">
   <table class="table table-condensed">
       <tr>
@@ -27,7 +27,7 @@
         <form style="display:inline" action="<?php echo e(route('posts.destroy',$post->id)); ?>" method="POST">
            <?php echo method_field('DELETE'); ?>
            <?php echo csrf_field(); ?>
-           <button type="submit" id="delete" style="background: none;padding: 0px;border: none;">
+           <button type="submit" id="delete">
               <a class="btn btn-danger text-light">Delete</a>
             </button>
         </form>
@@ -36,4 +36,7 @@
     </table>
   </div>
   <?php $__env->stopSection(); ?>
+
+  <script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
 <?php echo $__env->make('layouts.plantilla', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/ubuntu/laravel/ud6/ud6/resources/views/posts/show.blade.php ENDPATH**/ ?>

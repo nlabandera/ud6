@@ -21,5 +21,5 @@ Route::put('/user/{user}/updateUserRole','AdminController@updateUserRole')->name
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home','AdminController@index')->name('admin')->middleware('admin');
 
-Route::get('/home','EditorController@index')->name('editor')->middleware('role:editor');
+//Route::get('/home','EditorController@index')->name('editor')->middleware('role:editor');
 

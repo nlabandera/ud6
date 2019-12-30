@@ -2,7 +2,7 @@
 
 @section('content')
 <br>
-  <!-- Page Content -->
+
   <div class="container">
   <table class="table table-condensed">
       <tr>
@@ -29,7 +29,7 @@
         <form style="display:inline" action="{{ route('posts.destroy',$post->id) }}" method="POST">
            @method('DELETE')
            @csrf
-           <button type="submit" id="delete" style="background: none;padding: 0px;border: none;">
+           <button type="submit" id="delete">
               <a class="btn btn-danger text-light">Delete</a>
             </button>
         </form>
@@ -38,3 +38,6 @@
     </table>
   </div>
   @endsection
+
+  <script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
