@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\Role;
 
 class AdminController extends Controller
 {
@@ -13,7 +15,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        echo "Soy admin";
+        return view('admin.home')->with('users',User::all())->with('roles',Role::all());
     }
 
     /**

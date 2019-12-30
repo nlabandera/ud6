@@ -34,6 +34,7 @@ Route::resource('posts','PostController');
 
 Route::get('/admin','AdminController@index')->name('admin')->middleware('admin');
 
+Route::put('/user/{user}/updateUserRole','AdminController@updateUserRole')->name('updateUserRole')->middleware('admin');
 
 Route::get('/editor','EditorController@index')->name('editor')->middleware('role:editor');
 

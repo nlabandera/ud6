@@ -77,12 +77,16 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        /*$post=Post::find($id);
-        $this->authorize('view',$post);
+        $post=Post::find($id);
+        /*$this->authorize('view',$post);
 
         return view('posts.show', compact('post'));*/
 
-       return view('posts.show', ['post' => Post::find($id)]);
+         if(auth()->user()->id == $post->user_id){
+            return view('posts.show')->with('post',$post);
+        }
+
+       
 
     }
 
@@ -94,7 +98,10 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post=Post::find($id);
+        if(auth()->user()->id == $post->user_id){
+            return view('posts.edit')->with('post',$post)->with('categories',Category::all());
+        }
     }
 
     /**
@@ -106,7 +113,19 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $post=Post::find($id);
+        if(auth()->user()->id == $post->user_id){
+            $post->title = $request->title;
+            $post->excerpt = $request->excerpt;
+            $post->body = $request->body;
+            $post->category_id = $request->category;
+            $post->user_id = auth()->user()->id;
+            if(isset($request->image))
+                $post->image = $request->image;
+            $post->save();
+            return redirect('posts');
+        }
     }
 
     /**
