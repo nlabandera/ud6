@@ -3,34 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
-use App\User;
 use App\Post;
+use App\User;
 use App\Category;
-
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+
+    public function __construc(){
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function __construct()
+    public function index(User $user)
     {
-        $this->middleware('auth');
-        // $this->middleware(['auth','role:user']);
-    }
-
-    public function index()
-    {
-        $user = Auth::user();
-        
-        $posts=Post::where('user_id',$user->id)->get();
-
-        return view('posts.index',['posts'=>$posts]);
-
+        return view('posts.index')->with('posts',Auth::user()->posts);
     }
 
     /**
@@ -40,7 +32,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view ('posts.create')->with('categories',Category::all());;
+        return view('posts.create')->with('categories',Category::all());
     }
 
     /**
@@ -51,22 +43,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $post = new Post();
-
-        $post->title = request('title');
-        $post->excerpt = request('excerpt');
-        $post->body = request('body');
-        $post->category_id = request('category');
+        $post = new Post;
+        $post->title = $request->title;
+        $post->excerpt = $request->excerpt;
+        $post->body = $request->body;
+        $post->category_id = $request->category;
         $post->user_id = auth()->user()->id;
-        
-        if(isset($post->image))
-            $post->image = request('image');
-
+        if(isset($request->image)){
+            $post->image = $request->image;
+            // falta guardar la imagen
+        }
         $post->save();
-
-        return view ('posts.show');
-
-        
+        return redirect('/posts');
     }
 
     /**
@@ -75,19 +63,14 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        $post=Post::find($id);
-        /*$this->authorize('view',$post);
-
-        return view('posts.show', compact('post'));*/
-
-         if(auth()->user()->id == $post->user_id){
+        if(auth()->user()->id == $post->user_id){
             return view('posts.show')->with('post',$post);
+        }else{
+            // aborta devolviendo un status 403 (forbiden)
+            abort(403, 'Unauthorized action.');
         }
-
-       
-
     }
 
     /**
@@ -96,11 +79,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        $post=Post::find($id);
         if(auth()->user()->id == $post->user_id){
             return view('posts.edit')->with('post',$post)->with('categories',Category::all());
+        }else{
+            // aborta devolviendo un status 403 (forbiden)
+            abort(403, 'Unauthorized action.');
         }
     }
 
@@ -111,10 +96,8 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-
-        $post=Post::find($id);
         if(auth()->user()->id == $post->user_id){
             $post->title = $request->title;
             $post->excerpt = $request->excerpt;
@@ -124,7 +107,10 @@ class PostController extends Controller
             if(isset($request->image))
                 $post->image = $request->image;
             $post->save();
-            return redirect('posts');
+            return redirect('/posts');
+        }else{
+            // aborta devolviendo un status 403 (forbiden)
+            abort(403, 'Unauthorized action.');
         }
     }
 
@@ -134,9 +120,14 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        Post::destroy($id);
-        return redirect('posts');
+        if(auth()->user()->id == $post->user_id){
+            $post->delete();
+            return redirect('/posts');
+        }else{
+            // aborta devolviendo un status 403 (forbiden)
+            abort(403, 'Unauthorized action.');
+        }
     }
 }
