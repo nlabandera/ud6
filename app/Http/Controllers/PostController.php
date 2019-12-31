@@ -49,10 +49,7 @@ class PostController extends Controller
         $post->body = $request->body;
         $post->category_id = $request->category;
         $post->user_id = auth()->user()->id;
-        if(isset($request->image)){
-            $post->image = $request->image;
-            // falta guardar la imagen
-        }
+        $post->image = $request->image;
         $post->save();
         return redirect('/posts');
     }
@@ -98,8 +95,7 @@ class PostController extends Controller
             $post->body = $request->body;
             $post->category_id = $request->category;
             $post->user_id = auth()->user()->id;
-            if(isset($request->image))
-                $post->image = $request->image;
+            $post->image = $request->image;
             $post->save();
             return redirect('/posts');
        
